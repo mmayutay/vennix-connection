@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use Inertia\Inertia;
+use App\Models\Inventory;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -27,6 +29,10 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'can:manage-users'])->group(function () {
     Route::resource('users', UserController::class);
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('inventory', InventoryController::class);
 });
 
 require __DIR__.'/auth.php';
